@@ -15,13 +15,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    // Main function that's called when a button is clicked
     public void checkClicked(View v) {
+        // Get checkbox and its id, use that id to find the right image
         CheckBox checkbox = (CheckBox) v;
         String boxname = checkbox.getText().toString();
-
-        Log.d("potato", boxname);
         ImageView image = findImage(boxname);
 
+        // Set the image to visible if its currently invisible and vice versa
         if (image.getVisibility() == View.INVISIBLE) {
             image.setVisibility(View.VISIBLE);
         } else {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Function that returns the right imageView object with the given checkbox id
     private ImageView findImage(String boxname) {
         if (boxname.equals("Shoes")) {
             return findViewById(R.id.shoes);
