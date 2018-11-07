@@ -9,10 +9,30 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    String[] pics = {"Shoes", "Eyes", "Arms", "Ears", "Nose", "Glasses", "Mustache", "Mouth", "Eyebrows", "Hat"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            for (int i = 0; i<pics.length; i++) {
+                int state = savedInstanceState.getInt(pics[i]);
+                System.out.println(state);
+                findImage(pics[i]). setVisibility(state);
+            }
+
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        for (int i=0; i<pics.length; i++) {
+            outState.putInt(pics[i], findImage(pics[i]).getVisibility());
+        }
     }
 
     // Main function that's called when a button is clicked
