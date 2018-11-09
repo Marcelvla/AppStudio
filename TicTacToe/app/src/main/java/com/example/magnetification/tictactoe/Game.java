@@ -1,8 +1,13 @@
 package com.example.magnetification.tictactoe;
 
 import android.service.quicksettings.Tile;
+import android.support.v4.content.res.TypedArrayUtils;
+import android.widget.Toast;
 
 import java.io.Serializable;
+import java.net.IDN;
+import java.util.Arrays;
+import java.util.Random;
 
 public class Game implements Serializable {
     final private int BOARD_SIZE = 3;
@@ -10,7 +15,9 @@ public class Game implements Serializable {
 
     private Boolean playerOneTurn;
     private int movesPlayed;
-    private Boolean gameOver;
+    private int[][] coord = new int[][] {{0,0}, {0,1}, {0,2}, {1,0}, {1,1}, {1,2}, {2,0}, {2,1}, {2,2}};
+    private int[] ids = new int[]{2131165216, 2131165217, 2131165218, 2131165219, 2131165220, 2131165221, 2131165222, 2131165223, 2131165224};
+    private int[][] available = new int[][] {{0,0}, {0,1}, {0,2}, {1,0}, {1,1}, {1,2}, {2,0}, {2,1}, {2,2}};
 
     public Game() {
         board = new TileState[BOARD_SIZE][BOARD_SIZE];
@@ -19,7 +26,6 @@ public class Game implements Serializable {
                 board[i][j] = TileState.BLANK;
 
         playerOneTurn = true;
-        gameOver = false;
     }
 
     public TileState choose(int row, int column) {
@@ -29,10 +35,12 @@ public class Game implements Serializable {
             if (playerOneTurn) {
                 board[row][column] = TileState.CROSS;
                 playerOneTurn = false;
+                removeID(row, column);
                 return TileState.CROSS;
             } else {
                 board[row][column] = TileState.CIRCLE;
                 playerOneTurn = true;
+                removeID(row, column);
                 return TileState.CIRCLE;
             }
         } else {
@@ -40,7 +48,7 @@ public class Game implements Serializable {
         }
     }
 
-    public GameState won() {
+    public GameState won(GameState gameState) {
         if (threeInARow())
             if (playerOneTurn)
                 return GameState.PLAYER_TWO;
@@ -56,13 +64,13 @@ public class Game implements Serializable {
         if (filled)
             return GameState.DRAW;
 
-        return GameState.IN_PROGRESS;
+        return gameState;
     }
 
     private Boolean threeInARow() {
         for (int i = 0; i<BOARD_SIZE; i++) {
-            if (    (board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2]) && board[i][0] != TileState.BLANK) ||
-                    (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && board[0][i] != TileState.BLANK))
+            if ((board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2]) && board[i][0] != TileState.BLANK) ||
+                (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && board[0][i] != TileState.BLANK))
                 return true;
         }
 
@@ -74,9 +82,18 @@ public class Game implements Serializable {
         return board[row][column];
     }
 
+    public int[] computerMove() {
+        Random randomGenerator = new Random();
+        int ID = ids[randomGenerator.nextInt(ids.length)];
+        int[] co = getCoords(ID);
+        playerOneTurn = true;
+        removeID(co[0], co[1]);
+        board[co[0]][co[1]] = TileState.CIRCLE;
+        return new int[]{co[0], co[1]};
+    }
+
     public int[] getCoords(int id) {
         int[] coords = new int[2];
-        System.out.println(id);
 
         switch (id) {
             case 2131165216:
@@ -157,5 +174,18 @@ public class Game implements Serializable {
         }
 
         return id;
+    }
+
+    private void removeID(int row, int col) {
+        int [] temp = new int[ids.length - 1];
+        int ID = getID(row, col);
+        int next = 0;
+        for (int id : ids) {
+            if (id != ID && next < ids.length -1) {
+                temp[next] = id;
+                next++;
+            }
+        }
+        ids = temp;
     }
 }
