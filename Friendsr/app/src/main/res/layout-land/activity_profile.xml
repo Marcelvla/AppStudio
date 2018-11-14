@@ -12,21 +12,24 @@
         android:layout_height="match_parent"
         android:columnCount="2"
         android:rowCount="2"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingLeft="50dp">
 
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_columnWeight="1"
             android:padding="10dp"
             app:layout_column="0"
-            app:layout_row="0" />
+            app:layout_row="0"
+            app:layout_gravity="center"
+            android:textSize="25sp"/>
 
         <ImageView
             android:id="@+id/profilePic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="264dp"
+            android:layout_height="264dp"
             android:layout_gravity="center"
             android:padding="10dp"
             app:layout_column="0"
