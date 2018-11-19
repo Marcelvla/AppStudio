@@ -5,6 +5,6 @@ to see their profile. On their profile you can give them a rating between 0-5 st
 rating you give the characters will be saved. 
 
 Functionality:
-The app Friendsr uses the Friendsadapter to show the different kind of Friend classes there are. To show the circular 
+The app Friendsr uses the Friendsadapter to show the different kind of Friend classes there are. The Friend class holds the name, bio and drawable id to show the name, bio and picture of the characters. To show the circular 
 portraits I used a library from hdodenhof (https://github.com/hdodenhof/CircleImageView) and imported a simple version
 of the game of thrones font. Friendsadapter puts the friends in a grid_item.xml layout.  
