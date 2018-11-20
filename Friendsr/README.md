@@ -9,3 +9,5 @@ The app Friendsr uses the Friendsadapter to show the different kind of Friend cl
 portraits I used a library from hdodenhof (https://github.com/hdodenhof/CircleImageView) and imported a simple version
 of the game of thrones font. Friendsadapter puts the friends in a grid_item.xml layout.  
 
+![screenshot-home-menu](https://github.com/Marcelvla/AppStudio/blob/master/Friendsr/Screenshot_20181120-144709.jpg)
+![screeshot-friendspage-cersei](https://github.com/Marcelvla/AppStudio/blob/master/Friendsr/Screenshot_20181120-144715.jpg)
