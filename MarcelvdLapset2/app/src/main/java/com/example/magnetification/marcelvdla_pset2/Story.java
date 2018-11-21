@@ -17,7 +17,7 @@
  */
 
 // !YOU MAY WANT TO CHANGE THE PACKAGE BELOW SO THAT IT MATCHES YOUR PROJECT'S PACKAGE!
-package com.example.stepp.madlibs;
+package com.example.magnetification.marcelvdla_pset2;
 
 import java.io.*;
 import java.util.*;
