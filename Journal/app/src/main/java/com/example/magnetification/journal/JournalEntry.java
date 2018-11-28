@@ -4,25 +4,23 @@ import java.io.Serializable;
 
 public class JournalEntry implements Serializable  {
 
-    private int id;
-    private float title;
-    private float content;
+    private String title;
+    private String content;
     private int mood;
-    private int timestamp;
+    private String timestamp;
 
-    public JournalEntry(float title, float content, int mood, int timestamp) {
-
+    public JournalEntry(String aTitle, String aContent, int aMood, String aTimestamp) {
+        title = aTitle;
+        content = aContent;
+        mood = aMood;
+        timestamp = aTimestamp;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public float getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public float getContent() {
+    public String getContent() {
         return content;
     }
 
@@ -30,7 +28,7 @@ public class JournalEntry implements Serializable  {
         return mood;
     }
 
-    public int getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 

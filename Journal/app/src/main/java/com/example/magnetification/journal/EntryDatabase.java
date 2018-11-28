@@ -50,9 +50,14 @@ public class EntryDatabase extends SQLiteOpenHelper {
         return instance.getWritableDatabase().rawQuery("SELECT * FROM entries", null);
     }
 
-    public void insert(Map.Entry entry) {
-        ContentValues
-        instance.getWritableDatabase().insert("entries", null, )
+    public void insert(JournalEntry entry) {
+
+        ContentValues entries = new ContentValues();
+        entries.put("title", entry.getTitle());
+        entries.put("content", entry.getContent());
+        entries.put("mood", entry.getMood());
+        entries.put("timestamp", entry.getTimestamp());
+        instance.getWritableDatabase().insert("entries", null, entries);
     }
 
 
