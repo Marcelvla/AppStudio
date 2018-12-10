@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StoryTime extends AppCompatActivity {
+public class StoryActivity extends AppCompatActivity {
 
     private ArrayList<String> storyArrayList = new ArrayList<String>();
     private Story story;
@@ -29,13 +29,37 @@ public class StoryTime extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.story_time);
-        makeStories();
+        setContentView(R.layout.activity_story);
 
-        StoryTimeAdapter adapter = new StoryTimeAdapter(this, R.layout.list_item, storyArrayList);
-        ListView list = findViewById(R.id.stories);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new ListItemClickListener());
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getSerializable("story") != null) {
+                story = (Story) savedInstanceState.getSerializable("story");
+                setGUI();
+                String input = savedInstanceState.getString(("input"));
+                field.setText(input);
+            } else {
+                makeStories();
+
+                StoryTimeAdapter adapter = new StoryTimeAdapter(this, R.layout.list_item, storyArrayList);
+                ListView list = findViewById(R.id.stories);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new ListItemClickListener());
+            }
+        } else {
+            makeStories();
+
+            StoryTimeAdapter adapter = new StoryTimeAdapter(this, R.layout.list_item, storyArrayList);
+            ListView list = findViewById(R.id.stories);
+            list.setAdapter(adapter);
+            list.setOnItemClickListener(new ListItemClickListener());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("story", story);
+        String input = field.getText().toString();
+        outState.putString("input", input);
     }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
@@ -56,7 +80,10 @@ public class StoryTime extends AppCompatActivity {
         String id = "madlib" + position + "_" + name;
         InputStream is = getResources().openRawResource(getResources().getIdentifier(id, "raw", getPackageName()));
         story = new Story(is);
+        setGUI();
+    }
 
+    private void setGUI() {
         left = findViewById(R.id.wordsLeft);
         used = findViewById((R.id.wordsUsed));
         field = findViewById(R.id.wordField);
@@ -107,7 +134,7 @@ public class StoryTime extends AppCompatActivity {
 
     public void returnMain(View v) {
         story.clear();
-        Intent intent = new Intent(StoryTime.this, MainActivity.class);
+        Intent intent = new Intent(StoryActivity.this, MainActivity.class);
         startActivity(intent);
     }
 }

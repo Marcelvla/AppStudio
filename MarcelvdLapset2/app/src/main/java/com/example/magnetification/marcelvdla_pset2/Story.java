@@ -19,6 +19,8 @@
 // !YOU MAY WANT TO CHANGE THE PACKAGE BELOW SO THAT IT MATCHES YOUR PROJECT'S PACKAGE!
 package com.example.magnetification.marcelvdla_pset2;
 
+import android.os.Parcelable;
+
 import java.io.*;
 import java.util.*;
 
