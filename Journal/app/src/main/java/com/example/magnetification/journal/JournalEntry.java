@@ -31,5 +31,4 @@ public class JournalEntry implements Serializable  {
     public String getTimestamp() {
         return timestamp;
     }
-
 }

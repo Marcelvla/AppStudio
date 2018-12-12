@@ -23,7 +23,7 @@ public class EntryAdapter extends ResourceCursorAdapter {
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
         String titleString = cs.getString(1);
-        String textString = cs.getString(2).substring(0,15) + "...";
+        String textString = cs.getString(2).substring(0,2) + "...";
         int moodid = cs.getInt(3);
         String timeString = cs.getString(4);
 

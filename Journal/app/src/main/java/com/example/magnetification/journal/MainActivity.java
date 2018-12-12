@@ -13,6 +13,8 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EntryDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
+        db = EntryDatabase.getInstance(getApplicationContext());
         Cursor cs = db.selectAll();
 
         EntryAdapter adapter = new EntryAdapter(this, cs);
         ListView list = findViewById(R.id.entryList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new ListItemClickListener());
+        list.setOnItemLongClickListener(new ListItemLongClickListener());
     }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
@@ -45,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("mood", clickedEntry.getInt(3));
             intent.putExtra("time", clickedEntry.getString(4));
             startActivity(intent);
+        }
+    }
+
+    private class ListItemLongClickListener implements AdapterView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Cursor clickedEntry = (Cursor) adapterView.getItemAtPosition(i);
+            long id = clickedEntry.getLong(0);
+            db.deleteEntry(id);
+            finish();
+            startActivity(getIntent());
+            return true;
         }
     }
 }

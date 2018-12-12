@@ -60,6 +60,8 @@ public class EntryDatabase extends SQLiteOpenHelper {
         instance.getWritableDatabase().insert("entries", null, entries);
     }
 
-
+    public void deleteEntry(long id) {
+        instance.getWritableDatabase().delete("entries", "_id = '" + id +"'", null);
+    }
 }
 
