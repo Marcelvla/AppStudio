@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner diffSpin = findViewById(R.id.diffSpinner);
         String diff = diffSpin.getSelectedItem().toString();
         if (!diff.equals("Any Difficulty")) {
-            url += "&difficulty=" + diff;
+            url += "&difficulty=" + diff.toLowerCase();
         }
 
         Spinner typeSpin = findViewById(R.id.typeSpinner);
