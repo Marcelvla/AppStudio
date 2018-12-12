@@ -8,14 +8,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Callback{
+public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Callback {
 
     private TriviaHelper help;
+    private int score;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +36,8 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         if (savedInstanceState == null) {
             Intent intent = getIntent();
             String url = (String) intent.getSerializableExtra("url");
+            name = (String) intent.getSerializableExtra("name");
+            score = 0;
 
             help = new TriviaHelper(this);
             help.getQuestions(this, url);
@@ -54,15 +67,14 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         Button b = (Button) v;
         if (b.getText().equals(help.getCurrentQuestion().getCorrectAnswer())) {
             Toast.makeText(this, "You answered correctly!", Toast.LENGTH_SHORT).show();
+            updateScore(help.getCurrentQuestion().getDifficulty());
         } else {
             String msg = "No, the correct answer was: " + help.getCurrentQuestion().getCorrectAnswer();
             Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
         }
 
         if (help.getQuestionNumber() == help.getMax()) {
-            Intent intent = new Intent(TriviaActivity.this, HighScoreActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            postScore();
         } else {
             help.nextQuestion();
             fillQuestion();
@@ -126,10 +138,43 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
                     break;
             }
         } else {
-            answerA.setText("FALSE");
-            answerB.setText("TRUE");
+            answerA.setText("False");
+            answerB.setText("True");
             answerC.setVisibility(View.INVISIBLE);
             answerD.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void updateScore(String diff) {
+        switch (diff) {
+            case "easy":
+                score += 1;
+                break;
+            case "medium":
+                score += 3;
+                break;
+            case "hard":
+                score += 5;
+                break;
+        }
+    }
+
+    private void postScore() {
+        String url = "https://ide50-magnetification.cs50.io:8080/scores";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        PostRequest request = new PostRequest(Request.Method.POST, url, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+                Intent intent = new Intent(TriviaActivity.this, HighScoreActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(TriviaActivity.this, "Something went wrong posting your score :(", Toast.LENGTH_SHORT).show();
+            }
+        }, name, score);
+        queue.add(request);
     }
 }
