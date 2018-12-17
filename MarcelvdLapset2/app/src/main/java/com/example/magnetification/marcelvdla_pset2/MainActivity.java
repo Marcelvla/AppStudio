@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Sets the onclicklistener for the startbutton
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

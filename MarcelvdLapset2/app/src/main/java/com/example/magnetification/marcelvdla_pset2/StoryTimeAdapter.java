@@ -21,6 +21,7 @@ public class StoryTimeAdapter extends ArrayAdapter<String> {
         this.story = storyList;
     }
 
+    // Adapter for the listview for different stories.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

@@ -18,7 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Friend retrievedFriend;
     private SharedPreferences prefs;
 
-    // Sets the image, name, rating and bio for the clicked friend. 
+    // Sets the image, name, rating and bio for the clicked friend.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
