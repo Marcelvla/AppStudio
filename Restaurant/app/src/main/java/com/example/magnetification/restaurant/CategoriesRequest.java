@@ -25,17 +25,20 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         this.ct = context;
     }
 
+    // Callback for the cateories request.
     public interface Callback {
         void gotCategories(ArrayList<String> categories);
         void gotCategoriesError(String message);
 
     }
 
+    // sends the error message back to function gotCategoriesError
     @Override
     public void onErrorResponse(VolleyError error) {
         ac.gotCategoriesError(error.getMessage());
     }
 
+    // On receiving the categories it passes an arraylist with all categories to the function gotCategories
     @Override
     public void onResponse(JSONObject response) {
         try {
@@ -52,6 +55,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         }
     }
 
+    // makes the request for the categories
     public void getCategories(Callback activity) {
         ac = activity;
         RequestQueue queue = Volley.newRequestQueue(ct);

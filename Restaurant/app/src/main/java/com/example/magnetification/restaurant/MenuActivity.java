@@ -20,7 +20,8 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements MenuRequest.Callback {
 
-        @Override
+    // Does the request for retrieving the menu items
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
@@ -35,6 +36,7 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         x.getMenu(this, retrievedCat);
     }
 
+    // sets the menu items for the selected category
     @Override
     public void gotMenu(ArrayList<MenuItem> menuItems) {
         MenuAdapter adapter = new MenuAdapter(this, R.layout.menu_item, menuItems);
@@ -43,44 +45,13 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         list.setOnItemClickListener(new ListItemClickListener());
     }
 
+    // shows error message when something went wrong retrieving the menu items.
     @Override
     public void gotMenuError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // ArrayAdapter for the listview in MenuActivity
-    public class MenuAdapter extends ArrayAdapter<MenuItem> {
-
-        private ArrayList<MenuItem> menu;
-
-        public MenuAdapter(Context context, int resource, ArrayList<MenuItem> menuList) {
-            super(context, resource, menuList);
-            this.menu = menuList;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.menu_item, parent, false);
-            }
-
-            MenuItem dish = menu.get(position);
-
-            ImageView photo = convertView.findViewById(R.id.dishPhoto);
-            Picasso.get().load(dish.getImageUrl()).into(photo);
-
-            TextView name = convertView.findViewById(R.id.dishName);
-            name.setText(dish.getName());
-
-            TextView price = convertView.findViewById(R.id.price);
-            String pr = "€" + dish.getPrice();
-            price.setText(pr);
-
-            return convertView;
-        }
-    }
-
-    // OnItemClickListener for the categories list
+    // OnItemClickListener for the categories list, starts the detail view for a menu item.
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class CategoriesActivity extends AppCompatActivity implements CategoriesRequest.Callback {
 
+    // makes the request for categories.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
     }
 
+    // Shows categories when these have been found by the API
     @Override
     public void gotCategories(ArrayList<String> categories) {
         CatAdapter adapter = new CatAdapter(this, R.layout.category_item, categories);
@@ -35,33 +37,12 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         list.setOnItemClickListener(new ListItemClickListener());
     }
 
+    // Shows error message when something went wrong retrieving the categories
     @Override
     public void gotCategoriesError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // ArrayAdapter for the listview in CategoriesActivity
-    public class CatAdapter extends ArrayAdapter<String> {
-
-        private ArrayList<String> categories;
-
-        public CatAdapter(Context context, int resource, ArrayList<String> categoryList) {
-            super(context, resource, categoryList);
-            this.categories = categoryList;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.category_item, parent, false);
-            }
-
-            TextView catItem = convertView.findViewById(R.id.categoryName);
-            catItem.setText(categories.get(position));
-
-            return convertView;
-        }
-    }
 
     // OnItemClickListener for the categories list
     private class ListItemClickListener implements AdapterView.OnItemClickListener {

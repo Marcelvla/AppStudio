@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 public class MenuItemActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +28,9 @@ public class MenuItemActivity extends AppCompatActivity {
         name.setText(dish.getName());
 
         TextView price = findViewById(R.id.dishPrice);
-        String pr = "€" + dish.getPrice();
+        double p = dish.getPrice();
+        String pr = String.format(Locale.getDefault(), "%.2f", p);
+        pr = "€" + pr;
         price.setText(pr);
 
         TextView description = findViewById(R.id.dishDescription);
