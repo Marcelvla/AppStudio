@@ -24,6 +24,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
         this.friends = friendList;
     }
 
+    // Adapter for the gridview in the main menu. Sets the image and friend name.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

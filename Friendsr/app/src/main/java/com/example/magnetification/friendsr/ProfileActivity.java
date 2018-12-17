@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    // Global Variables
     private Friend retrievedFriend;
     private SharedPreferences prefs;
 
+    // Sets the image, name, rating and bio for the clicked friend. 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener());
     }
 
+    // Sets the rating given to the friend and saves it.
     private class OnRatingBarChangeListener implements RatingBar.OnRatingBarChangeListener {
         @Override
         public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {

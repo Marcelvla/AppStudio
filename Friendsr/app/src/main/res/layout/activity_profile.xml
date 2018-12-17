@@ -29,9 +29,19 @@
         android:numStars="5"
         android:padding="15dp" />
 
-    <TextView
-        android:id="@+id/bio"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:scrollbars="vertical"/>
+    </ScrollView>
 </LinearLayout>

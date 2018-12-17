@@ -35,14 +35,23 @@
             app:layout_column="0"
             app:layout_row="1" />
 
-        <TextView
-            android:id="@+id/bio"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/SCROLLER_ID"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            app:layout_column="1"
-            app:layout_row="1" />
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                app:layout_column="1"
+                app:layout_row="1" />
+        </ScrollView>
 
         <RatingBar
             android:id="@+id/ratingBar"

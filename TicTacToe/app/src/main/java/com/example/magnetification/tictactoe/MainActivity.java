@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // Starts a new game, depending on what button in the menu was pressed. 
+    // Starts a new game, depending on what button in the menu was pressed.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
