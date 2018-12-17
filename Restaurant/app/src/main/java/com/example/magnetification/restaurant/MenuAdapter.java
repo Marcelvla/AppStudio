@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 // ArrayAdapter for the listview in MenuActivity
 public class MenuAdapter extends ArrayAdapter<MenuItem> {
@@ -37,7 +38,8 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         name.setText(dish.getName());
 
         TextView price = convertView.findViewById(R.id.price);
-        String pr = "€" + dish.getPrice();
+        double p = dish.getPrice();
+        String pr = "€" + String.format(Locale.getDefault(), "%.2f", p);
         price.setText(pr);
 
         return convertView;

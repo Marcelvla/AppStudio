@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class MenuItem implements Serializable {
 
+    // Simple class for a menuitem, couple of global variables, getters and setters
     private String name;
     private String description;
     private String imageUrl;

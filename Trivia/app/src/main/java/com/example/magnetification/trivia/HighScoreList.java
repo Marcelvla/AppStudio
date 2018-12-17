@@ -11,6 +11,7 @@ public class HighScoreList implements Serializable {
 
     private ArrayList<HighScore> scorelist;
 
+    // stores the list of highscores. try catch because it could be that the response isnt a JSONObject
     public HighScoreList(JSONArray response, HighScoreHelper.Callback ac) {
         try {
             scorelist = new ArrayList<>(response.length() + 1);
@@ -27,6 +28,7 @@ public class HighScoreList implements Serializable {
         }
     }
 
+    // Return the highscorelist
     public ArrayList<HighScore> getHighScorelist() {
         return scorelist;
     }

@@ -28,6 +28,8 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
     private int score;
     private String name;
 
+    // if you already started the quiz loads the current question, else requests the questions
+    // with the url previously provided
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,22 +49,28 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         }
     }
 
+    // saves current progress in the quiz
     @Override
     protected void onSaveInstanceState(Bundle outstate) {
         super.onSaveInstanceState(outstate);
         outstate.putSerializable("trivia_help", help);
     }
 
+    // when the app received the questions it fills in the first, let the quiz begin!
     @Override
     public void gotQuestions(ArrayList<Question> lst) {
         fillQuestion();
     }
 
+    // shows error messsage when someting went wrong getting the questions.
     @Override
     public void gotQuestionsError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    // onclick handler, immediately shows if you answered the question correctly, updates the score
+    // accordingly, checks if you were at the last question and posts your score if you're done. Else
+    // the next question is loaded.
     public void checkClicked(View v) {
         Button b = (Button) v;
         if (b.getText().equals(help.getCurrentQuestion().getCorrectAnswer())) {
@@ -81,6 +89,7 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         }
     }
 
+    // Gets current question and sets the values of all attributes in the layout
     public void fillQuestion() {
         Question q = help.getCurrentQuestion();
         int number = help.getQuestionNumber();
@@ -107,6 +116,7 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
                 answerD.setVisibility(View.VISIBLE);
             }
 
+            // randomize the place where the correct answer is
             Random rand = new Random();
             int n = rand.nextInt(4);
             ArrayList<String> falseAnswers = q.getFalseAnswers();
@@ -138,6 +148,7 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
                     break;
             }
         } else {
+            // for true false questions make 2 possibilities invisible
             answerA.setText("False");
             answerB.setText("True");
             answerC.setVisibility(View.INVISIBLE);
@@ -145,6 +156,7 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         }
     }
 
+    // calculate score after answering, easy questions get 1 point, medium 3 pojnts and hard 5 points.
     private void updateScore(String diff) {
         switch (diff) {
             case "easy":
@@ -159,6 +171,7 @@ public class TriviaActivity extends AppCompatActivity implements TriviaHelper.Ca
         }
     }
 
+    // Sends the request to the server to post the score of your quiz.
     private void postScore() {
         String url = "https://ide50-magnetification.cs50.io:8080/scores";
         RequestQueue queue = Volley.newRequestQueue(this);

@@ -15,6 +15,7 @@ public class HighScoreActivity extends AppCompatActivity implements HighScoreHel
     private HighScoreHelper help;
     private HighScoreList highScores;
 
+    // Sets highscore layout and onclicklistener for the back button.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class HighScoreActivity extends AppCompatActivity implements HighScoreHel
         });
     }
 
+    // uses the highscoreadapter to show all the highscores when retrieved.
     @Override
     public void gotHighScores(JSONArray scoreList, HighScoreHelper.Callback ac) {
         highScores = new HighScoreList(scoreList, ac);
@@ -43,6 +45,7 @@ public class HighScoreActivity extends AppCompatActivity implements HighScoreHel
         list.setAdapter(adapter);
     }
 
+    // Shows error message when something went wrong retrieving the highscores
     @Override
     public void gotHighScoresError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

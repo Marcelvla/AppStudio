@@ -31,16 +31,20 @@ public class TriviaHelper implements Response.Listener<JSONObject>, Response.Err
         current = 0;
     }
 
+    // Callback function for retrieving the questions
     public interface Callback {
         void gotQuestions(ArrayList<Question> lst);
         void gotQuestionsError(String message);
     }
 
+    // passes the error to function gotQuestonsError
     @Override
     public void onErrorResponse(VolleyError error) {
         ac.gotQuestionsError(error.getMessage());
     }
 
+    // When the questions are retrieved makes an arraylist with all the questions in it and passes it to
+    // the function gotQuestions.
     @Override
     public void onResponse(JSONObject response) {
         try {
@@ -73,6 +77,7 @@ public class TriviaHelper implements Response.Listener<JSONObject>, Response.Err
         }
     }
 
+    // Function that makes the API request with given URL for the questions.
     public void getQuestions(Callback activity, String url) {
         ac = activity;
         RequestQueue queue = Volley.newRequestQueue(ct);
@@ -81,18 +86,22 @@ public class TriviaHelper implements Response.Listener<JSONObject>, Response.Err
         queue.add(jsonObjectRequest);
     }
 
+    // Returns the first question that has to be answered
     public Question getCurrentQuestion() {
         return questions.get(current);
     }
 
+    // returns the number of the first question that has to be answered
     public int getQuestionNumber() {
         return current;
     }
 
+    // increase current by one to get the next question
     public void nextQuestion() {
         current += 1;
     }
 
+    // returns the number of quesions in the array. 
     public int getMax() {
         return max;
     }

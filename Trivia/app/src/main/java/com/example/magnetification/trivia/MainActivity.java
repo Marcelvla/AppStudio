@@ -15,6 +15,7 @@ import static java.util.Arrays.asList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // sets correct layout and onclicklistener for the start butten which starts the trivia activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // gets the values entered in the spinners and makes the correct api url out of it.
     private String getURL() {
         String url = "https://opentdb.com/api.php?amount=";
         Spinner numSpin = findViewById(R.id.numSpinner);

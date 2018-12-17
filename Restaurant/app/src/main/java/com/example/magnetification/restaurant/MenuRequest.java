@@ -25,16 +25,19 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
         this.ct = context;
     }
 
+    // Callback functions for the menu request
     public interface Callback {
         void gotMenu(ArrayList<MenuItem> menuItems);
         void gotMenuError(String message);
     }
 
+    // sends error message back to function gotMenuError
     @Override
     public void onErrorResponse(VolleyError error) {
         ac.gotMenuError(error.getMessage());
     }
 
+    // on receiving the menu items it passes an arraylist with all menu items to function gotMenu
     @Override
     public void onResponse(JSONObject response) {
         try {
@@ -58,6 +61,7 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
         }
     }
 
+    // makes the request for the menu items.
     public void getMenu(Callback activity, String category) {
         ac = activity;
         cat = category;

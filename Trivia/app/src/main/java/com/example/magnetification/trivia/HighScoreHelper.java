@@ -23,21 +23,25 @@ public class HighScoreHelper implements Response.Listener<JSONArray>, Response.E
         this.ct = context;
     }
 
+    // Callback functions for when the highscores are retrieved.
     public interface Callback {
         void gotHighScores(JSONArray scoreList, Callback ac);
         void gotHighScoresError(String message);
     }
 
+    // Passes error message to gotHighScoresError when something went wrong retrieving the highscores.
     @Override
     public void onErrorResponse(VolleyError error) {
         ac.gotHighScoresError(error.getMessage());
     }
 
+    // Very lazily passes the response to gotHighScores function, Hooray for not optimizing things
     @Override
     public void onResponse(JSONArray response) {
         ac.gotHighScores(response, ac);
     }
 
+    // Function that makes request for the highscores.
     public void getScores(Callback activity, String url) {
         ac = activity;
         RequestQueue queue = Volley.newRequestQueue(ct);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Question implements Serializable {
 
+    // Simple class for a question, with variables for all its properties and getters
     private String question;
     private ArrayList<String> falseAnswers;
     private String correctAnswer;

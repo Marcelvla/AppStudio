@@ -13,6 +13,7 @@ import java.util.Locale;
 
 public class MenuItemActivity extends AppCompatActivity {
 
+    // Sets the details on the layout for the clicked menu item
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +30,7 @@ public class MenuItemActivity extends AppCompatActivity {
 
         TextView price = findViewById(R.id.dishPrice);
         double p = dish.getPrice();
-        String pr = String.format(Locale.getDefault(), "%.2f", p);
-        pr = "€" + pr;
+        String pr = "€" + String.format(Locale.getDefault(), "%.2f", p);
         price.setText(pr);
 
         TextView description = findViewById(R.id.dishDescription);

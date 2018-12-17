@@ -18,6 +18,7 @@ public class HighScoreAdapter extends ArrayAdapter<HighScore> {
         this.scorelist = aScores;
     }
 
+    // Sets highscores in the list
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class HighScore implements Serializable {
 
+    // Simple highscore class with score value and name
     private int score;
     private String name;
 
