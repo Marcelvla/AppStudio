@@ -13,17 +13,21 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Game game;
-    GameState gameState = GameState.IN_PROGRESS;
+    // Global variables
+    private Game game;
+    private GameState gameState = GameState.IN_PROGRESS;
 
+    // Creates option menu to select what type of game you want to play
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+    // Starts a new game, depending on what button in the menu was pressed. 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
         case R.id.newpc:
             oneplayerClicked();
             Toast.makeText(this, "Starting a game against the computer..", Toast.LENGTH_SHORT).show();
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         return(super.onOptionsItemSelected(item));
     }
 
+    // Oncreate checks if there is a saved instance state and returns to the state where the game left off.
+    // Else it starts a new game.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Saves the game and gamestate to the outstate
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -71,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         outState.putSerializable("GameState", gameState);
     }
 
+    // When a tile is clicked it updates the tile in the game, if it's a computer game it also lets
+    // the computer make a move.
     public void tileClicked(View view) {
         int id = view.getId();
         int[] coords = game.getCoords(id);
@@ -136,28 +145,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Starts a new game againts the computer
     private void oneplayerClicked() {
         game = new Game();
         gameState = GameState.COMPUTER;
         setContentView(R.layout.activity_main);
     }
 
+    // Starts a new 2 player game
     private void twoplayerClicked() {
         game = new Game();
         gameState = GameState.IN_PROGRESS;
         setContentView(R.layout.activity_main);
     }
 
+    // Checks the gamestate and shows the correct game-over message
     private void switchGameState(GameState gameState) {
         switch (gameState) {
             case PLAYER_ONE:
-                Toast.makeText(this, "You win!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Crosses wins!", Toast.LENGTH_SHORT).show();
                 break;
             case PLAYER_TWO:
-                Toast.makeText(this, "Computer wins!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Circles wins!", Toast.LENGTH_SHORT).show();
                 break;
             case DRAW:
-                Toast.makeText(this, "No one wins, no one loses.\n Hooray for communism!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No one wins, no one loses.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

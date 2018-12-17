@@ -10,15 +10,15 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Game implements Serializable {
+
+    // Global Variables
     final private int BOARD_SIZE = 3;
     private TileState[][] board;
 
     private Boolean playerOneTurn;
-    private int movesPlayed;
-    private int[][] coord = new int[][] {{0,0}, {0,1}, {0,2}, {1,0}, {1,1}, {1,2}, {2,0}, {2,1}, {2,2}};
     private int[] ids = new int[]{2131165216, 2131165217, 2131165218, 2131165219, 2131165220, 2131165221, 2131165222, 2131165223, 2131165224};
-    private int[][] available = new int[][] {{0,0}, {0,1}, {0,2}, {1,0}, {1,1}, {1,2}, {2,0}, {2,1}, {2,2}};
 
+    // Class constructor, makes a 2D array that stores the current game state
     public Game() {
         board = new TileState[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i<BOARD_SIZE; i++)
@@ -28,6 +28,8 @@ public class Game implements Serializable {
         playerOneTurn = true;
     }
 
+    // Function that fills in the square in the game board with a cross or a circle if the square
+    // is still available.
     public TileState choose(int row, int column) {
         TileState xy = board[row][column];
 
@@ -48,6 +50,7 @@ public class Game implements Serializable {
         }
     }
 
+    // Function that checks if the game is over, either if someone has won or the entire board is full
     public GameState won(GameState gameState) {
         if (threeInARow())
             if (playerOneTurn)
@@ -67,6 +70,7 @@ public class Game implements Serializable {
         return gameState;
     }
 
+    // Function that checks if someone there are either 3 crosses or circles in a row
     private Boolean threeInARow() {
         for (int i = 0; i<BOARD_SIZE; i++) {
             if ((board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2]) && board[i][0] != TileState.BLANK) ||
@@ -78,10 +82,13 @@ public class Game implements Serializable {
                 (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && board[0][2] != TileState.BLANK);
     }
 
+    // Function that returns the value of square
     public TileState getState(int row, int column) {
         return board[row][column];
     }
 
+    // Function that determines the next computermove by randomly selecting a tile from the tiles
+    // that are still available.
     public int[] computerMove() {
         Random randomGenerator = new Random();
         int ID = ids[randomGenerator.nextInt(ids.length)];
@@ -92,6 +99,7 @@ public class Game implements Serializable {
         return new int[]{co[0], co[1]};
     }
 
+    // Function that returns the coordinates of the board based on the id of the button in the gridlayout
     public int[] getCoords(int id) {
         int[] coords = new int[2];
 
@@ -128,6 +136,8 @@ public class Game implements Serializable {
         return coords;
     }
 
+    // Function that returns the ID of the item in the gridlayout based on the coordinates in the
+    // board
     public int getID(int row, int column) {
         int id = 0;
 
@@ -176,6 +186,8 @@ public class Game implements Serializable {
         return id;
     }
 
+    // Function that removes a coordinate from the ids array, which is used by the computer to make
+    // its next move.
     private void removeID(int row, int col) {
         int [] temp = new int[ids.length - 1];
         int ID = getID(row, col);
