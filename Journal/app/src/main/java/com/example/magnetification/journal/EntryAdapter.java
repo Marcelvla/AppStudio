@@ -20,10 +20,16 @@ public class EntryAdapter extends ResourceCursorAdapter {
         this.cs = cursor;
     }
 
+    // adapter for the list in main activity for showing the journal entries.
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
         String titleString = cs.getString(1);
-        String textString = cs.getString(2).substring(0,2) + "...";
+        String textString = cs.getString(2);
+
+        if (textString.length() > 20) {
+            textString = textString.substring(0,19) + "...";
+        }
+
         int moodid = cs.getInt(3);
         String timeString = cs.getString(4);
 
@@ -39,7 +45,7 @@ public class EntryAdapter extends ResourceCursorAdapter {
         preView.setText(textString);
     }
 
-
+    // Switch for the right mood image for the entry.
     public void switchMood(int moodid, View v) {
         ImageView moodIm = v.findViewById(R.id.moodImage);
         switch (moodid) {

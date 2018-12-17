@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class InputActivity extends AppCompatActivity {
 
+    // Sets the layout to create a new journal entry, sets a listener to the confirm entry button
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class InputActivity extends AppCompatActivity {
         Button confirmEntry = findViewById(R.id.confirmEntry);
         confirmEntry.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (addEntry(items) == 1) {
+                if (addEntry(items)) {
                     Intent startEntry = new Intent(v.getContext(), MainActivity.class);
                     startActivity(startEntry);
                 }
@@ -42,7 +43,9 @@ public class InputActivity extends AppCompatActivity {
         });
     }
 
-    private int addEntry(String[] items) {
+    // function that handles making a new journal entry
+    private boolean addEntry(String[] items) {
+        // sets items for the different spinners
         TextView titleField = findViewById(R.id.title);
         String title = titleField.getText().toString();
 
@@ -53,24 +56,27 @@ public class InputActivity extends AppCompatActivity {
         String mood = moodSpin.getSelectedItem().toString();
         int index = Arrays.asList(items).indexOf(mood);
 
+        // checks if requirements for an entry are met
         if (mood.equals("select")) {
             Toast.makeText(getApplicationContext(), "Select a mood!", Toast.LENGTH_SHORT).show();
-            return 0;
+            return false;
         } else if (title.equals("")) {
             Toast.makeText(getApplicationContext(), "Enter a title!", Toast.LENGTH_SHORT).show();
-            return 0;
+            return false;
         } else if (text.equals("")) {
             Toast.makeText(getApplicationContext(), "You didn't write anything!", Toast.LENGTH_SHORT).show();
-            return 0;
+            return false;
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm");
         String timestamp = sdf.format(new Date());
 
+        // Makes a new JournalEntry and adds it to the database
         JournalEntry entry = new JournalEntry(title, text, index, timestamp);
         EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
         db.insert(entry);
-        return 1;
+
+        return true;
     }
 
 

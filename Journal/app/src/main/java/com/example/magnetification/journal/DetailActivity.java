@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
+    // sets the layout to show the contents of the clicked journal entry
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    // switches the mood image for the current entry
     public void switchMood(int moodid, View v) {
         ImageView moodIm = v.findViewById(R.id.moodImage);
         switch (moodid) {

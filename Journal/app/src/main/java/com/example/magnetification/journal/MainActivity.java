@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EntryDatabase db;
 
+    // shows all joural
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemLongClickListener(new ListItemLongClickListener());
     }
 
+    // listitem click listener, starts the activitiy with the right contents of the journal
+    // since journalentry implements serializable this could have been done passing the class instance
+    // for the clicked entry, but in this case I didn't because youre working with cursors
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Longclickhandler, deletes the journal entry which has been longclicked
     private class ListItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -15,6 +15,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
 
     private static EntryDatabase instance;
 
+    // creates new entrydatabase if it doesnt exit already
     public static EntryDatabase getInstance(Context context) {
         if (instance == null) {
             instance = new EntryDatabase(context);
@@ -27,6 +28,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
         super(context, "entries", null, 1);
     }
 
+    // Starts the database with these entries
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL( "create table entries ( _id INTEGER PRIMARY KEY, " +
@@ -40,16 +42,19 @@ public class EntryDatabase extends SQLiteOpenHelper {
                 "VALUES ('second day', 'a little bit less than yesterday', '5', 'DWDDD')");
     }
 
+    // updates the database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS entries");
         onCreate(db);
     }
 
+    // select all entries in the database
     public Cursor selectAll() {
         return instance.getWritableDatabase().rawQuery("SELECT * FROM entries", null);
     }
 
+    // insert new JournalEntry class instance into database
     public void insert(JournalEntry entry) {
 
         ContentValues entries = new ContentValues();
@@ -60,6 +65,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
         instance.getWritableDatabase().insert("entries", null, entries);
     }
 
+    // deletes single database entry
     public void deleteEntry(long id) {
         instance.getWritableDatabase().delete("entries", "_id = '" + id +"'", null);
     }
